@@ -6,7 +6,7 @@
 {
   imports = lib.optional (builtins.pathExists ./do-userdata.nix) ./do-userdata.nix ++ 
     [
-      ./hardware-configuration.nix
+      
     ];
 
   # If you use an SSD (which you most probably are) it may be useful to enable TRIM support and set filesystem flags for best performance.
