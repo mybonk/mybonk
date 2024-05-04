@@ -41,7 +41,7 @@
                 '';
               };
             }
-
+            ./hardware/mybonk_v4/hardware-configuration.nix
             ./configuration.nix
             ./housekeeping.nix
             ./health-check.nix
@@ -66,7 +66,7 @@
                 '';
               };
             }
-
+            ./hardware/mybonk_v3/hardware-configuration.nix
             ./configuration.nix
             ./housekeeping.nix
             ./health-check.nix
