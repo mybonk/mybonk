@@ -18,14 +18,14 @@
       fsType = "ext4";
     };
 
-  fileSystems."/boot/efi" =
-    { device = "/dev/disk/by-uuid/ADED-8591";
-      fsType = "vfat";
-    };
-
   fileSystems."/data" =
     { device = "/dev/disk/by-uuid/88841687-2b80-45f2-bec1-e1759a11a256";
       fsType = "ext4";
+    };
+
+  fileSystems."/boot/efi" =
+    { device = "/dev/disk/by-uuid/ADED-8591";
+      fsType = "vfat";
     };
 
   swapDevices =
