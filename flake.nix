@@ -1,5 +1,5 @@
 {
-  description = "An example of MYBONK community full nodes configuration template."
+  description = "An example of MYBONK community full nodes configuration template.";
 
   # This is an example to show how it's done.
 
