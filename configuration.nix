@@ -63,6 +63,8 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     wget
+    tmux
+    tmuxinator
     sshfs
     git
     vim
