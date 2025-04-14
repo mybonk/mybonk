@@ -1,8 +1,10 @@
 # INSTALL MYBONK IN LESS THAN 10MIN
 
-NixOS Workshop @Buenos Aeres @Saturday 19th 2025
-If you are really new to computing have a look at our ["Baby rabbit holes"](https://github.com/mybonk/mybonk-wiki/blob/main/baby-rabbit-holes.md).
-If at the end of this workshop you want to learn more about how the "automagic" installation process works under the hood have a look at our [MYBONK Wiki](https://github.com/mybonk/mybonk-wiki/tree/main)
+NixOS Workshop @Buenos Aeres @Saturday 19th 2025.
+
+If you are really new to computing you may benefit from consulting our ["Baby rabbit holes"](https://github.com/mybonk/mybonk-wiki/blob/main/baby-rabbit-holes.md).
+
+If at the end of this workshop you want to learn more about how the "automagic" installation process works under the hood have a look at our [MYBONK Wiki](https://github.com/mybonk/mybonk-wiki/tree/main).
 
 Here are the instructions to push a system configuration to any Linux computer to which you have `root` access. 
 
