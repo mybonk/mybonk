@@ -2,7 +2,7 @@
 
 NixOS Workshop @Buenos Aeres @Saturday 19th 2025.
 
-If you are really new to computing you may benefit from consulting our ["Baby rabbit holes"](https://github.com/mybonk/mybonk-wiki/blob/main/baby-rabbit-holes.md).
+If you are really new to computing you may benefit from consulting our "[Baby rabbit holes](https://github.com/mybonk/mybonk-wiki/blob/main/baby-rabbit-holes.md)".
 
 If at the end of this workshop you want to learn more about how the "automagic" installation process works under the hood have a look at our [MYBONK Wiki](https://github.com/mybonk/mybonk-wiki/tree/main).
 
