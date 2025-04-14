@@ -6,9 +6,7 @@ If you are really new to computing you may benefit from consulting our "[Baby ra
 
 If at the end of this workshop you want to learn more about how the "automagic" installation process works under the hood have a look at our [MYBONK Wiki](https://github.com/mybonk/mybonk-wiki/tree/main).
 
-The present instructions and code are stored in [https://github.com/mybonk/mybonk](https://github.com/mybonk/mybonk) 
-
-./mybonk-erase-and-install.sh --target-host root@178.156.170.26 --flake .#generic
+The present instructions and code are stored in [https://github.com/mybonk/mybonk](https://github.com/mybonk/mybonk).
 
 Here are the instructions to push a system configuration to any Linux computer to which you have `root` access. 
 
