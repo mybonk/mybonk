@@ -1,78 +1,84 @@
 {
-  description = "An example of MYBONK community full nodes configuration template.";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+  inputs.disko.url = "github:nix-community/disko";
+  inputs.disko.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
 
-  # This is an example to show how it's done.
+  outputs =
+    {
+      nixpkgs,
+      disko,
+      nixos-facter-modules,
+      ...
+    }:
+    {
+      nixosConfigurations.hetzner-cloud = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          disko.nixosModules.disko
+          ./configuration.nix
+        ];
+      };
+      # tested with 2GB/2CPU droplet, 1GB droplets do not have enough RAM for kexec
+      nixosConfigurations.digitalocean = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          disko.nixosModules.disko
+          { disko.devices.disk.disk1.device = "/dev/vda"; }
+          {
+            # do not use DHCP, as DigitalOcean provisions IPs using cloud-init
+            networking.useDHCP = nixpkgs.lib.mkForce false;
 
-  # Pull in nix-bitcoin's flake.
-  # inputs.nix-bitcoin.url = "github:fort-nix/nix-bitcoin";
-
-  # ... Or pull in the flake of the fork of `nix-bitcoin` by Chris to use SIGNET of Mutinynet instead of MAINNET.
-  # Note: When used the parameter `services.bitcoind.testnet`is disregarded, the system will use Mutinynet regardless.
-  inputs.nix-bitcoin.url = "github:chrisguida/nix-bitcoin/mempool-and-fix-no-feerate";
-  
-  inputs.nixpkgs.follows = "nix-bitcoin/nixpkgs";
-  inputs.nixpkgs-unstable.follows = "nix-bitcoin/nixpkgs-unstable"; 
-
-  outputs = { self, nixpkgs, nix-bitcoin, ...  }: { 
-
-     nixosConfigurations = {
-
-        mybonk-jay = nix-bitcoin.inputs.nixpkgs.lib.nixosSystem {
-           system = "x86_64-linux";
-         
-          modules = [
-            # Import the default NixOS modules from nix-bitcoin
-            nix-bitcoin.nixosModules.default
-            # Optional: Import secure-node and/or hardened presets
-            (nix-bitcoin + "/modules/presets/secure-node.nix")
-            #(nix-bitcoin + "/modules/presets/hardened.nix")
-            {
-              networking.hostName = "mybonk-jay";
-              
-              users.users.root = {
-                openssh.authorizedKeys.keys = [
-                # FIXME: Replace this with your SSH pubkey
-                "ssh-ed25519 AAAAC3..."
-                ];
+            services.cloud-init = {
+              enable = true;
+              network.enable = true;
+              settings = {
+                datasource_list = [ "ConfigDrive" ];
+                datasource.ConfigDrive = { };
               };
-              services.clightning = {
-                extraConfig = ''
-                  alias=MYBONK-SIGNET-1
-                '';
-              };
-            }
-            ./hardware/mybonk_v4/hardware-configuration.nix
-            ./configuration.nix
-            ./housekeeping.nix
-            ./health-check.nix
-         ];
-       };
+            };
+          }
+          ./configuration.nix
+        ];
+      };
+      nixosConfigurations.hetzner-cloud-aarch64 = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        modules = [
+          disko.nixosModules.disko
+          ./configuration.nix
+        ];
+      };
 
-       mybonk-jay2 = nix-bitcoin.inputs.nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
+      # Use this for all other targets
+      # nixos-anywhere --flake .#generic --generate-hardware-config nixos-generate-config ./hardware-configuration.nix <hostname>
+      nixosConfigurations.generic = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          {
+            networking.hostName = "generic";
+          }
+          disko.nixosModules.disko
+          ./configuration.nix
+          ./hardware-configuration.nix
+        ];
+      };
 
-          modules = [
-            # import the default NixOS modules from nix-bitcoin
-            nix-bitcoin.nixosModules.default
-            # Optional: Import the optional secure-node presets offered by nix-bitcoin
-            (nix-bitcoin + "/modules/presets/secure-node.nix")
-            #(nix-bitcoin + "/modules/presets/hardened.nix")
-            {
-              networking.hostName = "mybonk-jay2";
-              
-              services.clightning = {
-                extraConfig = ''
-                  alias=MYBONK-SIGNET-2
-                '';
-              };
-            }
-            ./hardware/mybonk_v3/hardware-configuration.nix
-            ./configuration.nix
-            ./housekeeping.nix
-            ./health-check.nix
-         ];
-       };
+      # Slightly experimental: Like generic, but with nixos-facter (https://github.com/numtide/nixos-facter)
+      # nixos-anywhere --flake .#generic-nixos-facter --generate-hardware-config nixos-facter facter.json <hostname>
+      nixosConfigurations.generic-nixos-facter = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          disko.nixosModules.disko
+          ./configuration.nix
+          nixos-facter-modules.nixosModules.facter
+          {
+            config.facter.reportPath =
+              if builtins.pathExists ./facter.json then
+                ./facter.json
+              else
+                throw "Have you forgotten to run nixos-anywhere with `--generate-hardware-config nixos-facter ./facter.json`?";
+          }
+        ];
+      };
     };
-  };
 }
-

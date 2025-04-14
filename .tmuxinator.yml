@@ -42,11 +42,9 @@ name: console
 
 # Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
 # pre_window: rbenv shell 2.0.0-p247
-pre_window: 
-  - ssh operator@<%= @settings["node"] %>
-
+pre_window:
 # Pass command line options to tmux. Useful for specifying a different tmux.conf.
-# tmux_options: -f ~/.tmux.mac.conf
+tmux_options: -f ./.tmux.conf
 
 # Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
 # tmux_command: byobu
@@ -70,12 +68,11 @@ windows:
       # Synchronize all panes of this window, can be enabled before or after the pane commands run.
       # 'before' represents legacy functionality and will be deprecated in a future release, in favour of 'after'
       #synchronize: after
-      command:
+      panes:
         - node_logs:
           - journalctl -f -n 30 
-      local_shell:
-        - local:
-          - pwd
+        - running:
+          - watch -n 2 'systemctl --type=service --state=running'
   - CLI_commands:
       layout: even-vertical
       panes:
