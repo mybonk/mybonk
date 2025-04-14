@@ -6,6 +6,10 @@ If you are really new to computing you may benefit from consulting our "[Baby ra
 
 If at the end of this workshop you want to learn more about how the "automagic" installation process works under the hood have a look at our [MYBONK Wiki](https://github.com/mybonk/mybonk-wiki/tree/main).
 
+The present instructions and code are stored in [https://github.com/mybonk/mybonk](https://github.com/mybonk/mybonk) 
+
+./mybonk-erase-and-install.sh --target-host root@178.156.170.26 --flake .#generic
+
 Here are the instructions to push a system configuration to any Linux computer to which you have `root` access. 
 
 This is not a full instructions on how to setup a complete MYBONK full node but rather demonstrate its installation and management mechanism based on 4 simple commands:
@@ -31,13 +35,16 @@ $ cd mybonk
 In the cloned directory modify the `configuration.nix` to set your own ssh public keys (parameters `authorizedKeys.keys`) instead of the ones there by default which are only examples to show you what it looks like. Again: Make 100% sure you put your own key(s) (public key of a private-public keys pair) else you may loose access to the machine after installation.
 
 ### STEP 3
-Launch the auto-installation command (use `--flake .#generic` as in the example if you are not too sure).
+Going forward we are going to assume the IP address of the machine you want to install onto is `178.156.170.26`.
+Launch the auto-installation command (use `--flake .#generic` as in the example below if you are not too sure).
 ```
-$ ./mybonk-rebuild.sh switch --target-host root@178.156.170.26 --flake .#generic
+$ ./mybonk-erase-and-install.sh --target-host root@178.156.170.26 --flake .#generic
 ````
 
 ### STEP 4
-Done. Your MYBONK is running. 
+Done. 
+
+Your new server has been installed and is running. 
 
 ### CONCLUSION
 
