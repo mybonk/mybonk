@@ -67,6 +67,13 @@
     }; 
   };
 
+  # Add and configure other services you need, here CouchDB
+  # services.couchdb = {
+  #     enable = true;
+  #     adminUser = "FIXME";
+  #     adminPass = "FIXME";
+  # };
+
   environment.systemPackages = map lib.lowPrio [
     pkgs.curl
     pkgs.gitMinimal
