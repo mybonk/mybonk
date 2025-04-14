@@ -34,7 +34,8 @@ In the cloned directory modify the `configuration.nix` to set your own ssh publi
 
 ### STEP 3
 Going forward we are going to assume the IP address of the machine you want to install onto is `178.156.170.26`.
-Launch the auto-installation command (use `--flake .#generic` as in the example below if you are not too sure).
+Launch MYBONK "automagic installer" (use `--flake .#generic` as in the example below if you are not too sure).
+*** ALL DATA WILL BE LOST *** on the target machine.
 ```
 $ ./mybonk-erase-and-install.sh --target-host root@178.156.170.26 --flake .#generic
 ````
