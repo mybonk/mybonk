@@ -80,3 +80,12 @@ $ ./mybonk-term-open.sh operator@178.156.170.26 --remote-dir mybonk
 ```
 ./mybonk-term-close.sh operator@178.156.170.26
 ```
+
+
+### WATCH YOUR DISKS SPACE!
+
+If you experiment and rebuild your systems quite a lot you will need to run garbage collection now and then to avoid running out of disk space. The disk usage is due to all your subsequent builds, all kept on the disk until you explicitly request for them to be deleted. There are various ways to manage this but in the scope Of this exercise just run `nix-collect-garbage --delete-old` when you run out of space.
+
+```
+$ nix-collect-garbage --delete-old
+```
