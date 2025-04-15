@@ -121,7 +121,7 @@ test_ssh_connection() {
 # Run the specified nixos-rebuild sub-command
 run_nixos_rebuild() {
     local sub_command="$1"
-    local nixos_rebuild_command="nixos-rebuild ${verbose:+--verbose} ${show_trace:+--show-trace} $sub_command --target-host $target_host ${build_host:+--build-host ${build_host:-$build_host}}  --flake $flake"
+    local nixos_rebuild_command="nixos-rebuild ${verbose:+--verbose} ${show_trace:+--show-trace} $sub_command ${target_host:+--target-host ${target_host:-$target_host}} ${build_host:+--build-host ${build_host:-$build_host}}  --flake $flake"
     echo "Command to run: $nixos_rebuild_command"
     
     start_time=$(date +%s)
