@@ -70,8 +70,9 @@ $ ./mybonk-rebuild.sh switch --target-host root@178.156.170.26 --flake .#generic
 - Allows you to open a preconfigured tmux session with MYBONK. 
 - Use the option `--help` to see all that is possible.
 ```
-$ ./mybonk-term-open.sh operator@178.156.170.26
+$ ./mybonk-term-open.sh operator@178.156.170.26 --remote-dir mybonk
 ```
+- The option `--remote-dir`is very important here, it tells the script where to find the tmuxinator settings, typically the directory where you cloned the repository (in this example it is `mybonk`). It is not needed if you run the script locally (without the optional `--remote-dir` parameter).
 
 #### mybonk-term-close.sh
 - Kill the tmux session with MYBONK. 
