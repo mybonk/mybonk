@@ -8,6 +8,8 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
+    #imports = lib.optional (builtins.pathExists ./do-userdata.nix) ./do-userdata.nix ++ 
+    (fetchTarball { url="https://github.com/msteen/nixos-vscode-server/tarball/master"; sha256="09j4kvsxw1d5dvnhbsgih0icbrxqv90nzf0b589rb5z6gnzwjnqf"; } )
     ./disk-config.nix
   ];
   boot.loader.grub = {
@@ -26,6 +28,9 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  # Enable vscode server (this allows to connect remotly from vscode).
+  services.vscode-server.enable = true;
 
   # Use this setting 'loose' because strict reverse path filtering breaks Tailscale exit node use and some subnet routing setups
   networking.firewall.checkReversePath = "loose";
