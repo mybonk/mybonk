@@ -4,6 +4,9 @@
 display_elapsed_time() {
 local seconds=$1
 
+output=$seconds
+output+=" seconds ("
+
 days=$((seconds / 86400))
 seconds=$((seconds % 86400))
 
@@ -12,9 +15,6 @@ seconds=$((seconds % 3600))
 
 minutes=$((seconds / 60))
 seconds=$((seconds % 60))
-
-output=$seconds
-output+="seconds ("
 
 if [ $days -gt 0 ]; then
   output+="${days}d, "
@@ -122,14 +122,14 @@ test_ssh_connection() {
 run_nixos_rebuild() {
     local sub_command="$1"
     local nixos_rebuild_command="nixos-rebuild ${verbose:+--verbose} ${show_trace:+--show-trace} $sub_command --target-host $target_host ${build_host:+--build-host ${build_host:-$build_host}}  --flake $flake"
-    echo "Running command: $nixos_rebuild_command"
+    echo "Command to run: $nixos_rebuild_command"
     
     start_time=$(date +%s)
     if $nixos_rebuild_command; then
         end_time=$(date +%s)
         elapsed_time=$((end_time - start_time))
-        echo "⏱️ MYBONK operation took $(display_elapsed_time "$elapsed_time")"
-        echo "✅ MYBONK operation completed successfully 🚀"
+        echo "⏱️ Operation took $(display_elapsed_time "$elapsed_time")"
+        echo "✅ Operation completed successfully 🚀"
     else
         end_time=$(date +%s)
         elapsed_time=$((end_time - start_time))
