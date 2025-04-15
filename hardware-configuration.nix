@@ -1,1 +1,1 @@
-throw "Have you forgotten to run nixos-anywhere with `--generate-hardware-config nixos-generate-config ./hardware-configuration.nix`?"
+throw "Have you forgotten to run `nixos-generate-config` (or nixos-anywhere with `--generate-hardware-config nixos-generate-config ./hardware-configuration.nix`)?"
