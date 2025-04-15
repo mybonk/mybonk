@@ -55,7 +55,7 @@ display_usage() {
     echo
     echo "This script runs the specified nixos-rebuild sub-command with the provided options."
     echo "If the hosts are not provided, localhost is used as the default for target-host."
-    echo "The script tests SSH connections to the hosts before running the sub-command."
+    echo "The script tests ssh connections to the hosts, if required, before executing."
 }
 
 # Parse command line arguments
@@ -94,6 +94,7 @@ while [[ "$1" != "" ]]; do
             ;;
         *)
             display_usage
+            echo "ERROR: Unrecognized option '$1'"
             exit 1
     esac
     shift

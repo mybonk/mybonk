@@ -1,7 +1,7 @@
 #bash!
 
 construct_command() {
-    local target_host="$1" flake="$2" test_mode="$3"
+    local target_host="$1" flake="$2" test="$3"
     local command="nix run github:nix-community/nixos-anywhere -- --generate-hardware-config nixos-generate-config ./hardware-configuration.nix"
 
     [[ "$target_host" ]] && command+=" --target-host $target_host"
@@ -11,7 +11,7 @@ construct_command() {
     default_flake_name+=${target_host#*@} # We are interested only in anything after '@' in target_host (the server name).
     [[ -z $flake ]] && command+=" $default_flake_name"
     command+=" $flake"
-    [[ "$test_mode" ]] && command+=" --vm-test"
+    [[ "$test" ]] && command+=" --vm-test"
     echo $command
 }
 
@@ -88,25 +88,18 @@ output+=")";
 echo $output
 }
 
-usage() {
-    echo "Usage: $0 <target-host> <flake> [--test]"
-    echo "Options:"
-    echo "  --test  Run the operation in test mode (adds --vm-test to the nix run command)"
-    exit 1
-}
-
 # Display usage information
 display_usage() {
-    echo "Usage: $0  [--flake <flake>] [--target-host <host>] [--test-mode] [--help]"
+    echo "Usage: $0 --target-host <host> [--flake <flake>] [--test] [--help]"
     echo
-    echo "  --target-host <host>  Optional, specify the target host for the deployment"
+    echo "  --target-host <host>  Specify the target host for the deployment"
     echo "  --flake <flake>       Optional, specify the configuration to be deployed, so it must be defined as an nixosConfiguration element in the flake.nix. If not provided the default is made using target-host as follows: .#<target-host>"
-    echo "  --test-mode           Optional."
+    echo "  --test                Run the operation in test mode (adds --vm-test to the nix run command)"
     echo "  --help                Display this help message"
     echo
     echo "This script runs the specified nixos-anywhere command with the provided options."
-    echo "If --target-host is not provided the install takes place on local machine (without requiring an ssh connection)."
-    echo "The script tests SSH connections to the hosts before running the sub-command."
+    echo "If --target-host is not provided the install takes place on local machine (still requiring an ssh connection as root needs to be used for system setup)."
+    echo "The script tests ssh connections to the hosts before running."
 }
 
 while [[ "$1" != "" ]]; do
@@ -119,8 +112,8 @@ while [[ "$1" != "" ]]; do
             shift
             flake="$1"
             ;;
-        --test-mode)
-            test_mode="true"
+        --test)
+            test="true"
             exit 0
             ;;
         --help)
@@ -129,20 +122,19 @@ while [[ "$1" != "" ]]; do
             ;;
         *)
             display_usage
+            echo "ERROR: Unrecognized option '$1'"
             exit 1
     esac
     shift
 done
 
-command=$(construct_command "$target_host" "$flake" "$test_mode")
+
+[[ -z "$target_host" ]] && echo "Parameter '--target-host' is mandatory." && exit 0
+
+command=$(construct_command "$target_host" "$flake" "$test")
 
 confirm_operation
 # Before anything else make sure we can ssh into the machine if it's a remote one.
-if [[ -n "$target_host" ]]; then
-    echo "--target-host defined, testing connection with $target_host..."
-    test_ssh_connection "$target_host"
-else 
-    echo "--target-host not defined: No need to test ssh as will deploy locally."
-fi
+test_ssh_connection "$target_host"
 
 run_nix_run "$command"
