@@ -86,10 +86,25 @@ $ ./mybonk-term-close.sh operator@178.156.170.26
 
 #### WATCH YOUR DISKS SPACE!
 
+Keep an eye on your disks free space, use the command `df`:
+
+```bash
+$ df -hT
+Filesystem                           Type      Size  Used Avail Use% Mounted on
+devtmpfs                             devtmpfs  192M     0  192M   0% /dev
+tmpfs                                tmpfs     1.9G     0  1.9G   0% /dev/shm
+tmpfs                                tmpfs     959M  3.1M  956M   1% /run
+tmpfs                                tmpfs     1.9G  408K  1.9G   1% /run/wrappers
+/dev/disk/by-partlabel/disk-sda-root ext4       20G   14G  4.6G  76% /
+/dev/sda2                            vfat      500M   33M  468M   7% /boot
+tmpfs                                tmpfs     384M     0  384M   0% /run/user/1001
+```
+
 If you experiment and rebuild your systems quite a lot you will need to run garbage collection now and then to avoid running out of disk space. The disk usage is due to all your subsequent builds, all kept on the disk until you explicitly request for them to be deleted. There are various ways to manage this but in the scope Of this exercise just run `nix-collect-garbage --delete-old` when you run out of space.
 
 ```bash
 $ nix-collect-garbage --delete-old
+7531 store paths deleted, 3659.82 MiB freed
 ```
 
 #### CANNOT CONNECT WITH SSH!
