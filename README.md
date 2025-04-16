@@ -11,10 +11,10 @@ The present instructions and code are stored in [https://github.com/mybonk/mybon
 Here are the instructions to push a system configuration to any Linux computer to which you have `root` access. 
 
 This is not a full instructions on how to setup a complete MYBONK full node but rather demonstrate its installation and management mechanism based on 4 simple commands:
-- mybonk-erase-and-install.sh
-- mybonk-rebuild.sh
-- mybonk-term-open.sh
-- mybonk-term-close.sh
+- `mybonk-erase-and-install.sh`
+- `mybonk-rebuild.sh`
+- `mybonk-term-open.sh`
+- `mybonk-term-close.sh`
 
 Thereby the configuration that will be used is the simplest you can imagine (only basic services and Tailscale), it is refered to as '.#generic' in this document. 
 
@@ -24,7 +24,7 @@ Any feedback before, during and after the workshop are welcome.
 
 ### STEP 1
 On any NixOS system (or at least any system having Nix, the package manager, installed) clone the present repository:
-```
+```bash
 $ git clone https://github.com/mybonk/mybonk.git
 $ cd mybonk
 ````
@@ -36,7 +36,7 @@ In the cloned directory modify the `configuration.nix` to set your own ssh publi
 Going forward we are going to assume the IP address of the machine you want to install onto is `178.156.170.26`.
 Launch MYBONK "automagic installer" (use `--flake .#generic` as in the example below if you are not too sure).
 *** ALL DATA WILL BE LOST *** on the target machine.
-```
+```bash
 $ ./mybonk-erase-and-install.sh --target-host root@178.156.170.26 --flake .#generic
 ````
 
@@ -62,7 +62,7 @@ $ ./mybonk-erase-and-install.sh --target-host root@178.156.170.26 --flake .#gene
 - Allows you to update the configuration of MYBONK (local or remote) hot by default (without requiring a system reboot).
 	- Use the option `--help` to see all that is possible.
 
-```
+```bash
 $ ./mybonk-rebuild.sh switch --target-host root@178.156.170.26 --flake .#generic
 ```
 
@@ -77,15 +77,59 @@ $ ./mybonk-term-open.sh operator@178.156.170.26 --remote-dir mybonk
 #### mybonk-term-close.sh
 - Kill the tmux session with MYBONK. 
 - Use the option `--help` to see all that is possible.
-```
-./mybonk-term-close.sh operator@178.156.170.26
+```bash
+$ ./mybonk-term-close.sh operator@178.156.170.26
 ```
 
 
-### WATCH YOUR DISKS SPACE!
+### TIPS
+
+#### WATCH YOUR DISKS SPACE!
 
 If you experiment and rebuild your systems quite a lot you will need to run garbage collection now and then to avoid running out of disk space. The disk usage is due to all your subsequent builds, all kept on the disk until you explicitly request for them to be deleted. There are various ways to manage this but in the scope Of this exercise just run `nix-collect-garbage --delete-old` when you run out of space.
 
-```
+```bash
 $ nix-collect-garbage --delete-old
 ```
+
+#### CANNOT CONNECT WITH SSH!
+
+You cannot ssh into your node although you copied your public key into the node's .nix configuration file' before rebuilding?
+
+If you use macOS you may want to use `ssh-agent` to make your life easier when dealing with `ssh`.
+
+Not using ssh-agent you would have to specify the rsa key to be used each each time you call ssh in a command that looks like `$ ssh -o "IdentitiesOnly=yes" -i <private key filename> <hostname>` which is error prone and you don't want to juggle around with private keys. 
+
+Use ssh-agent instead! Start `ssh-agent` in the background:
+```bash
+$ eval "$(ssh-agent -s)"
+> Agent pid 59566
+```
+
+Add your rsa keys to ssh-agent (these are your **private** keys):
+```bash
+$ eval `ssh-add`
+Identity added: /Users/jay/.ssh/id_rsa
+Identity added: /Users/jay/.ssh/id_ecdsa
+```
+
+Confirm your key(s) have been imported:
+```bash
+$ eval `ssh-add -l`
+096 SHA256:RRa2T2DF8Zvc2KkKsF6A3BxvAOsynktDFEnbQMvnwvA Jay@Jay-MacBook-Pro.local (RSA)
+521 SHA256:iBOQhmf9CTiW75sYWJ995vaBn5I4aoS6YI6oaKwx/y8 Jay@Jay-MacBook-Pro.local (ECDSA)
+```
+
+Now your ssh connection should be succesfull.
+
+If you're using macOS Sierra 10.12.2 or later you can get the keys (and passphrases) automatically loaded  into the ssh-agent by defining Host parameters `AddKeysToAgent`, `UseKeychain` and `IdentityFile` in your `~/.ssh/config` file. The section you would need to add looks like this:
+
+```
+Host 178.156.170.26
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_ecdsa
+```
+
+
+
