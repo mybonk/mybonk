@@ -2,7 +2,7 @@
 
 construct_command() {
     local target_host="$1" flake="$2" test="$3"
-    local command="nix run github:nix-community/nixos-anywhere -- --generate-hardware-config nixos-generate-config ./hardware-configuration.nix"
+    local command="nix run --extra-experimental-features nix-command --extra-experimental-features  flakes  github:nix-community/nixos-anywhere -- --generate-hardware-config nixos-generate-config ./hardware-configuration.nix"
 
     [[ "$target_host" ]] && command+=" --target-host $target_host"
 

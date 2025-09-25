@@ -87,12 +87,14 @@
     pkgs.powertop
     pkgs.btop
     pkgs.glances
+    pkgs.ripgrep
   ];
 
   users.users.root.openssh.authorizedKeys.keys = [
     # change this to your ssh key
-  "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAHj1NOz5CQGPvrJFRIcDRlNixhIkJKnaVypGtjK+DPmvZKP0G55ASxIG+vk3Nk5Vyjo1ymjb0fYIK3YqwPv1xG0CAF5shi0sY+M2wKJL4+YCy/+xhYH3EVbLE1xtUM+uLqCr76i+Z9+QhosW/Etd9UxgDeoy8S9uQ64FeIUUpDANksURQ=="
-  ];
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/puJeHJyiHY3qvtui7mhWKY+RxefeQi5H4jkdgekYt Jay@Jay-MacBook-Pro.local"
+  "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAEkk0OReo3KVfw0WJG9dPevrgc7h0X3rlCAfbk3I/Ei0LpoJXA4AMxxlBHkWjpzyx7DZFZHEOAezMEvMA0RzD+79AFPwwVut+fR6VufzDgp+YK2RzKi73imKRzo4EqRruXTF+9NtlcjRBdgBcSvndsIBAcxfkVmDFBdyA6G5fTBkTtyTw== operator@nixos"
+];
 
 
   users.users.operator = {
@@ -100,8 +102,8 @@
     extraGroups = [ "wheel" ];
     openssh.authorizedKeys.keys = [
     # change this to your ssh key
-    "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAHj1NOz5CQGPvrJFRIcDRlNixhIkJKnaVypGtjK+DPmvZKP0G55ASxIG+vk3Nk5Vyjo1ymjb0fYIK3YqwPv1xG0CAF5shi0sY+M2wKJL4+YCy/+xhYH3EVbLE1xtUM+uLqCr76i+Z9+QhosW/Etd9UxgDeoy8S9uQ64FeIUUpDANksURQ=="
-    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC+VC97yrRmvfSpivUepie9ykV6jBYWDQ2HeOidXFgZ73gsIwnnOrdr7GONoNunK6dDYI7nZ60Qxg97p8uQT82YwoNAbavJH6+a7vE1vaWTGjBiTPPGkJ/DJwqCXsntJCkW2Q3/pHbz/nVEMCTjawzraVVPTV8Z0dPTrmckSvXNQXHZF0R/ZoSfZYgmVq+La745bftCjwKXZR+9fUfxmHgEWcpVhYwCXz6nFHHDwSjRWESkzKqV85yQhmnGsqUWQAgCSHkQP8RUH1Jzbf897DQTUedhgaXKf2z4IZw89vMIISG+gWDy3w0aZgfrVPXsMUPJ7PONDHGK/dF+f19sZn7pvrRrBIAo3h+Y2SoljiUpQgVAPx8EqTqjtGiLY4EeLMTnUDbz+0MQq0ujE3qXFVKcRcap4ZXBG5A8cUZLBq7uRlrmnU6maAv/PLz8RzstPXUH3CdWn5J4qxldfbyqhI3KBdZ8KfAfpM0bo25Z9oM7y78Kwd1IgUE27dxVZKP1KI+6lltEz5ppIu+WTLehn5z/J2eTMn10wCsS8WAvnqfnTIpVMADBexMfwKv6Q20c6uOcslSLHMXCzDeaT6mTofgyjZ0cU4lYuHWFceZjeBgx+vq1Paga5cXAonm31qcOjdSBJSwlU9bMCVKby9s0fkMFZzWXZ33MxiMePgPRk5lTTw=="
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/puJeHJyiHY3qvtui7mhWKY+RxefeQi5H4jkdgekYt Jay@Jay-MacBook-Pro.local"
+    "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAEkk0OReo3KVfw0WJG9dPevrgc7h0X3rlCAfbk3I/Ei0LpoJXA4AMxxlBHkWjpzyx7DZFZHEOAezMEvMA0RzD+79AFPwwVut+fR6VufzDgp+YK2RzKi73imKRzo4EqRruXTF+9NtlcjRBdgBcSvndsIBAcxfkVmDFBdyA6G5fTBkTtyTw== operator@nixos"
     ];
   };
   
