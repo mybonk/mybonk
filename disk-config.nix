@@ -23,6 +23,23 @@
               mountpoint = "/boot";
             };
           };
+          encryptedSwap = {
+            size = "100M";
+            content = {
+              type = "swap";
+              randomEncryption = true;
+              priority = 100; # prefer to encrypt as long as we have space for it
+            };
+          };
+
+          plainSwap = {
+            size = "8G";
+            content = {
+              type = "swap";
+              discardPolicy = "both";
+              resumeDevice = true; # resume from hiberation from this device
+            };
+          };
           root = {
             name = "root";
             size = "100%";
@@ -31,6 +48,7 @@
               vg = "pool";
             };
           };
+          	
         };
       };
     };

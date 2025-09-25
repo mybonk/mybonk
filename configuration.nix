@@ -9,12 +9,12 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
     #imports = lib.optional (builtins.pathExists ./do-userdata.nix) ./do-userdata.nix ++ 
-    (fetchTarball { url="https://github.com/msteen/nixos-vscode-server/tarball/master"; sha256="09j4kvsxw1d5dvnhbsgih0icbrxqv90nzf0b589rb5z6gnzwjnqf"; } )
-    ./disk-config.nix
+    (fetchTarball { url="https://github.com/msteen/nixos-vscode-server/tarball/master"; sha256="1rdn70jrg5mxmkkrpy2xk8lydmlc707sk0zb35426v1yxxka10by"; } )
+    #./disk-config.nix
   ];
   boot.loader.grub = {
     # no need to set devices, disko will add all devices that have a EF02 partition to the list already
-    # devices = [ ];
+    #devices = [  ];
     efiSupport = true;
     efiInstallAsRemovable = true;
   };
@@ -68,16 +68,9 @@
     enable = true;
     settings = {
         PasswordAuthentication = true; #Keep this to false unless you are playing around
-        PermitRootLogin = "without-password"; 
+        PermitRootLogin = "yes"; 
     }; 
   };
-
-  # Add and configure other services you need, here CouchDB
-  # services.couchdb = {
-  #     enable = true;
-  #     adminUser = "FIXME";
-  #     adminPass = "FIXME";
-  # };
 
   environment.systemPackages = map lib.lowPrio [
     pkgs.curl
@@ -94,12 +87,11 @@
     pkgs.powertop
     pkgs.btop
     pkgs.glances
-    pkgs.geekbench
   ];
 
   users.users.root.openssh.authorizedKeys.keys = [
     # change this to your ssh key
-    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCuGp2f5FDhoq9tB+WuY/LKYBGSsDE5C2aKMd8zkjM/lVhsOxwd1BUuqiZ8L5m1IYRGNh5ewnYH1om9RTbU4ngxyW58LfXZ/RYNq52/ZtOqpQq6Pw6IH5YjG3qBGitN4vg1ILQF02Kw+tWlPsJ2H3a8VNGOOUNlAO0FB3n2O4MPGeCVM7h/SgjUGFfrX+stVxeH9oFzXR82dZT0I3hzpm6Kl1DDMnbv+eTUvCNgPT8w3w3HOCFxa2nLz61XMXqcW2sO8Onn0/WqZC7NC7G7Fx0VMY+tguoEySUCRIZSCkvQeZDypj0CFoYs9ohVWfqh2wl7x1eoow/RAGSQ+O4DgpLv2TNHCVJB8x12igczMhgM/F21bDOZoh2wkwk5Y8JbBUaPqQ0YEvrniuR7ZbZCP39V0VvodjNzlPvFb1o0fHrXeHzaHJ5XJBeM2s6bqKuvr5wKLt4NUT5dQGZcWl2gGmaAn7qcCKVJsq0zppEAdaRJ6soFRd8vM3G7jzNNGxusUYE= operator@mybonk-jay4"
+  "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAHj1NOz5CQGPvrJFRIcDRlNixhIkJKnaVypGtjK+DPmvZKP0G55ASxIG+vk3Nk5Vyjo1ymjb0fYIK3YqwPv1xG0CAF5shi0sY+M2wKJL4+YCy/+xhYH3EVbLE1xtUM+uLqCr76i+Z9+QhosW/Etd9UxgDeoy8S9uQ64FeIUUpDANksURQ=="
   ];
 
 
@@ -108,8 +100,8 @@
     extraGroups = [ "wheel" ];
     openssh.authorizedKeys.keys = [
     # change this to your ssh key
-    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCuGp2f5FDhoq9tB+WuY/LKYBGSsDE5C2aKMd8zkjM/lVhsOxwd1BUuqiZ8L5m1IYRGNh5ewnYH1om9RTbU4ngxyW58LfXZ/RYNq52/ZtOqpQq6Pw6IH5YjG3qBGitN4vg1ILQF02Kw+tWlPsJ2H3a8VNGOOUNlAO0FB3n2O4MPGeCVM7h/SgjUGFfrX+stVxeH9oFzXR82dZT0I3hzpm6Kl1DDMnbv+eTUvCNgPT8w3w3HOCFxa2nLz61XMXqcW2sO8Onn0/WqZC7NC7G7Fx0VMY+tguoEySUCRIZSCkvQeZDypj0CFoYs9ohVWfqh2wl7x1eoow/RAGSQ+O4DgpLv2TNHCVJB8x12igczMhgM/F21bDOZoh2wkwk5Y8JbBUaPqQ0YEvrniuR7ZbZCP39V0VvodjNzlPvFb1o0fHrXeHzaHJ5XJBeM2s6bqKuvr5wKLt4NUT5dQGZcWl2gGmaAn7qcCKVJsq0zppEAdaRJ6soFRd8vM3G7jzNNGxusUYE= operator@mybonk-jay4"
-    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC+VC97yrRmvfSpivUepie9ykV6jBYWDQ2HeOidXFgZ73gsIwnnOrdr7GONoNunK6dDYI7nZ60Qxg97p8uQT82YwoNAbavJH6+a7vE1vaWTGjBiTPPGkJ/DJwqCXsntJCkW2Q3/pHbz/nVEMCTjawzraVVPTV8Z0dPTrmckSvXNQXHZF0R/ZoSfZYgmVq+La745bftCjwKXZR+9fUfxmHgEWcpVhYwCXz6nFHHDwSjRWESkzKqV85yQhmnGsqUWQAgCSHkQP8RUH1Jzbf897DQTUedhgaXKf2z4IZw89vMIISG+gWDy3w0aZgfrVPXsMUPJ7PONDHGK/dF+f19sZn7pvrRrBIAo3h+Y2SoljiUpQgVAPx8EqTqjtGiLY4EeLMTnUDbz+0MQq0ujE3qXFVKcRcap4ZXBG5A8cUZLBq7uRlrmnU6maAv/PLz8RzstPXUH3CdWn5J4qxldfbyqhI3KBdZ8KfAfpM0bo25Z9oM7y78Kwd1IgUE27dxVZKP1KI+6lltEz5ppIu+WTLehn5z/J2eTMn10wCsS8WAvnqfnTIpVMADBexMfwKv6Q20c6uOcslSLHMXCzDeaT6mTofgyjZ0cU4lYuHWFceZjeBgx+vq1Paga5cXAonm31qcOjdSBJSwlU9bMCVKby9s0fkMFZzWXZ33MxiMePgPRk5lTTw== Jay@Jay-MacBook-Pro.local"
+    "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAHj1NOz5CQGPvrJFRIcDRlNixhIkJKnaVypGtjK+DPmvZKP0G55ASxIG+vk3Nk5Vyjo1ymjb0fYIK3YqwPv1xG0CAF5shi0sY+M2wKJL4+YCy/+xhYH3EVbLE1xtUM+uLqCr76i+Z9+QhosW/Etd9UxgDeoy8S9uQ64FeIUUpDANksURQ=="
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC+VC97yrRmvfSpivUepie9ykV6jBYWDQ2HeOidXFgZ73gsIwnnOrdr7GONoNunK6dDYI7nZ60Qxg97p8uQT82YwoNAbavJH6+a7vE1vaWTGjBiTPPGkJ/DJwqCXsntJCkW2Q3/pHbz/nVEMCTjawzraVVPTV8Z0dPTrmckSvXNQXHZF0R/ZoSfZYgmVq+La745bftCjwKXZR+9fUfxmHgEWcpVhYwCXz6nFHHDwSjRWESkzKqV85yQhmnGsqUWQAgCSHkQP8RUH1Jzbf897DQTUedhgaXKf2z4IZw89vMIISG+gWDy3w0aZgfrVPXsMUPJ7PONDHGK/dF+f19sZn7pvrRrBIAo3h+Y2SoljiUpQgVAPx8EqTqjtGiLY4EeLMTnUDbz+0MQq0ujE3qXFVKcRcap4ZXBG5A8cUZLBq7uRlrmnU6maAv/PLz8RzstPXUH3CdWn5J4qxldfbyqhI3KBdZ8KfAfpM0bo25Z9oM7y78Kwd1IgUE27dxVZKP1KI+6lltEz5ppIu+WTLehn5z/J2eTMn10wCsS8WAvnqfnTIpVMADBexMfwKv6Q20c6uOcslSLHMXCzDeaT6mTofgyjZ0cU4lYuHWFceZjeBgx+vq1Paga5cXAonm31qcOjdSBJSwlU9bMCVKby9s0fkMFZzWXZ33MxiMePgPRk5lTTw=="
     ];
   };
   
