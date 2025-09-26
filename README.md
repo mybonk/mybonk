@@ -1,6 +1,6 @@
 # INSTALL MYBONK IN LESS THAN 10MIN
 
-NixOS Workshop @Buenos Aeres @Saturday 19th 2025.
+NixOS Workshop @Buenos Aeres @Saturday 19th April 2025.
 
 If you are really new to computing you may benefit from consulting our "[Baby rabbit holes](https://github.com/mybonk/mybonk-wiki/blob/main/baby-rabbit-holes.md)".
 
@@ -35,7 +35,7 @@ In the cloned directory modify the `configuration.nix` to set your own ssh publi
 ### STEP 3
 Going forward we are going to assume the IP address of the machine you want to install onto is `178.156.170.26`.
 Launch MYBONK "automagic installer" (use `--flake .#generic` as in the example below if you are not too sure).
-*** ALL DATA WILL BE LOST *** on the target machine.
+**ALL DATA WILL BE LOST** on the target machine.
 ```bash
 $ ./mybonk-erase-and-install.sh --target-host root@178.156.170.26 --flake .#generic
 ````
@@ -51,7 +51,7 @@ You can now explore the following helper commands.
 
 #### mybonk-erase-and-install.sh
 - Automatically builds and install MYBONK.
-- BE CARFUL**: The local partitions will be wiped out, you would normally run this once to get your system up and running then use `mybonk-rebuild.sh` instead to adjust the configuration of the system subsequently.
+- **BE CARFUL**: The local partitions will be wiped out, you would normally run this once to get your system up and running then use `mybonk-rebuild.sh` instead to adjust the configuration of the system subsequently.
 - If the `--target-host` option is provided the install is done on that machine (you will need ssh keys setup for this to work).
 - Use the option `--help` to see all that is possible.
 ```bash
