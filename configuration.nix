@@ -25,6 +25,7 @@
     # Deduplicate and optimize nix store
     auto-optimise-store = true;
   };
+  nix.settings.trusted-users = [ "operator" ];
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
