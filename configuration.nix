@@ -92,10 +92,8 @@
 
   users.users.root.openssh.authorizedKeys.keys = [
     # change this to your ssh key
-  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/puJeHJyiHY3qvtui7mhWKY+RxefeQi5H4jkdgekYt Jay@Jay-MacBook-Pro.local"
-  "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBABPKpnfyR8Q4O7r55Xp7zvstg3DflrnWaCmL5PHhBfqwRfNgDqSxuuYfkv/iC9hn95/rn6nWlZkHho46Mw2S2UhpQEQJq3TWeMn0QjxDARw+KNlfURixst4QGRwaMn8Z94zxU9aBPYbs2LQYDSX+k0z1VgGXclkbEvc2KbI3Kbv34TdVw== operator@mothership"
-  "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAEkk0OReo3KVfw0WJG9dPevrgc7h0X3rlCAfbk3I/Ei0LpoJXA4AMxxlBHkWjpzyx7DZFZHEOAezMEvMA0RzD+79AFPwwVut+fR6VufzDgp+YK2RzKi73imKRzo4EqRruXTF+9NtlcjRBdgBcSvndsIBAcxfkVmDFBdyA6G5fTBkTtyTw== operator@nixos"
-];
+    "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBABTjXzlHGw941UGukM3HVUTpvsXCLgx7EZRJ83YE32qEe8HtXmGHo41YftauWwnTN5rQvMWTd0puFzXz4vKu7YC1gATUUtYNa6mzgtt+dNvTvLNcQ1vSQ5s19yKKgJjZV1MZBlcf/HklfNdS0Owja1aIrp9jKlJErTWPXKtN6vkfLSF5g== Jay@Jay-MacBook-Pro.local"
+    ];
 
 
   users.users.operator = {
@@ -103,10 +101,9 @@
     extraGroups = [ "wheel" ];
     openssh.authorizedKeys.keys = [
     # change this to your ssh key
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/puJeHJyiHY3qvtui7mhWKY+RxefeQi5H4jkdgekYt Jay@Jay-MacBook-Pro.local"
-    "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBABPKpnfyR8Q4O7r55Xp7zvstg3DflrnWaCmL5PHhBfqwRfNgDqSxuuYfkv/iC9hn95/rn6nWlZkHho46Mw2S2UhpQEQJq3TWeMn0QjxDARw+KNlfURixst4QGRwaMn8Z94zxU9aBPYbs2LQYDSX+k0z1VgGXclkbEvc2KbI3Kbv34TdVw== operator@mothership"
-    "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAEkk0OReo3KVfw0WJG9dPevrgc7h0X3rlCAfbk3I/Ei0LpoJXA4AMxxlBHkWjpzyx7DZFZHEOAezMEvMA0RzD+79AFPwwVut+fR6VufzDgp+YK2RzKi73imKRzo4EqRruXTF+9NtlcjRBdgBcSvndsIBAcxfkVmDFBdyA6G5fTBkTtyTw== operator@nixos"
-    ];
+    "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBABTjXzlHGw941UGukM3HVUTpvsXCLgx7EZRJ83YE32qEe8HtXmGHo41YftauWwnTN5rQvMWTd0puFzXz4vKu7YC1gATUUtYNa6mzgtt+dNvTvLNcQ1vSQ5s19yKKgJjZV1MZBlcf/HklfNdS0Owja1aIrp9jKlJErTWPXKtN6vkfLSF5g== Jay@Jay-MacBook-Pro.local"
+    "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAH26emFyi+s8bYytRcKgObsHMCRmtvb81pnPoQIjVspLrmlH45fQSaE3doxauE9o8gD4bzOgtPATEDEPQNxncUgpwCUr6hanu5ojFWSAYJff0k9/W4TMuEbPcqUg6I+lEzn+N/eDtESIIi5BZh5e6oaqd9I/WwjmvLOdOZFmv/dpjOXyQ== operator@mothership"
+  ];
   };
   
   security.sudo.extraRules= [
