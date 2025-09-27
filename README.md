@@ -100,7 +100,7 @@ tmpfs                                tmpfs     1.9G  408K  1.9G   1% /run/wrappe
 tmpfs                                tmpfs     384M     0  384M   0% /run/user/1001
 ```
 
-If you experiment and rebuild your systems quite a lot you will need to run garbage collection now and then to avoid running out of disk space. The disk usage is due to all your subsequent builds, all kept on the disk until you explicitly request for them to be deleted. There are various ways to manage this but in the scope Of this exercise just run `nix-collect-garbage --delete-old` when you run out of space.
+If you experiment a lot and rebuild often you will need to run garbage collection now and then to avoid running out of disk space. The disk usage is due to all your subsequent builds, all kept on the disk until you explicitly request for them to be deleted. There are various ways to manage this but in the scope of this exercise just run `nix-collect-garbage --delete-old` when you run out of space.
 
 ```bash
 $ nix-collect-garbage --delete-old
@@ -111,7 +111,7 @@ $ nix-collect-garbage --delete-old
 
 You cannot ssh into your node although you copied your public key into the node's .nix configuration file' before rebuilding?
 
-If you use macOS you may want to use `ssh-agent` to make your life easier when dealing with `ssh`.
+If you use macOS you may want to use `ssh-agent` to make your life easier.
 
 Not using ssh-agent you would have to specify the rsa key to be used each each time you call ssh in a command that looks like `$ ssh -o "IdentitiesOnly=yes" -i <private key filename> <hostname>` which is error prone and you don't want to juggle around with private keys. 
 
@@ -121,7 +121,7 @@ $ eval "$(ssh-agent -s)"
 > Agent pid 59566
 ```
 
-Add your rsa keys to ssh-agent (these are your **private** keys):
+Add your ssh keys to ssh-agent (these are your **private** keys):
 ```bash
 $ eval `ssh-add`
 Identity added: /Users/jay/.ssh/id_rsa
